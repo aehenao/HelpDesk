@@ -37,5 +37,9 @@ class Cases extends Model
       return $this->belongsTo('App\User');
    }
 
-  
+   public function notes(){
+     return $this->hasMany('App\Notes');
+   }
+
+
 }

@@ -66,5 +66,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Cases', 'specialist_id');
     }
 
+    public function notes()
+    {
+       return $this->hasMany('App\Notes');
+    }
+
 
 }

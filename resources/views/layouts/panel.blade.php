@@ -31,6 +31,7 @@
  <!-- SweetAlert2 -->
 <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
   @yield('styles')
+  <link href="{{asset('css/app.css')}}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -145,10 +146,10 @@
 <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
 <!-- SweetAlert2 -->
 <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> --}}
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-<!-- Mi codigo Vuejs -->
-<script src="{{asset('dist\js\customVuejs.js')}}"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 

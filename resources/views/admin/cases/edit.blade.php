@@ -71,13 +71,13 @@
           <select class="form-control" name="priority">
             <option value="low" @if($case->priority == 'low') selected @endif>Baja</option>
               <option value="normal" @if($case->priority == 'normal') selected @endif>Normal</option>
-                <option value="high" @if($case->priority == 'high') selected @endif>Alta</option>
-                  <option value="critical" @if($case->priority == 'critical') selected @endif>Critico</option>
-                  </select>
-                </div>
-              </div>
+              <option value="high" @if($case->priority == 'high') selected @endif>Alta</option>
+              <option value="critical" @if($case->priority == 'critical') selected @endif>Critico</option>
+          </select>
+        </div>
+      </div>
 
-              <div class="col-md-8">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>Especialista</label>
                   <select class="form-control select2" name="specialist" style="width: 100%;" required>
@@ -92,6 +92,13 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
+                    <label for="autor">Autor</label>
+                    <input type="text" class="form-control" name="autor"  value="{{$case->author->name}}" disabled>
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="form-group">
                     <label>Categoria</label>
                     <select class="form-control select2" name="category" style="width: 100%;" required>
                       @foreach ($categories as $category)
@@ -99,6 +106,24 @@
                           {{$category->name}}
                         </option>
                       @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Estado</label>
+                    <select class="form-control" name="status">
+                      <option value="register" @if($case->status == 'register') selected @else style="display: none;" @endif>Registrado</option>
+                      <option value="process" @if($case->status == 'process') selected @endif>En Proceso</option>
+                        @if($case->status != 'register')
+                          <option value="stop" @if($case->status == 'stop') selected @endif>En Espera</option>
+                        @endif
+                        @if($case->status == 'register')
+                          <option value="cancel" >Anular</option>
+                        @else
+                          <option value="close" @if($case->status == 'close') selected  @endif>Cerrado</option>
+                        @endif
                     </select>
                   </div>
                 </div>
@@ -112,14 +137,6 @@
                         </select>
                       </div>
                     </div>
-
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="autor">Autor</label>
-                        <input type="text" class="form-control" name="autor"  value="{{$case->author->name}}" disabled>
-                      </div>
-                    </div>
-
 
 
                     <div class="col-md-12">
@@ -136,7 +153,7 @@
                     </div>
 
                     <div class="col-md-4">
-                      <a href="/cases" class="btn btn-block btn-warning">Volver</a>
+                      <a href="/cases" class="btn btn-block btn-warning" style="color: white;">Volver</a>
                     </div>
 
                   </form>
@@ -150,66 +167,46 @@
                 <div class="row" style="padding-top: 15px;">
                   <div class="col-md-12">
                     <!-- The time line -->
-                    <div class="timeline">
+                    <div class="timeline" id="app">
                       <!-- timeline time label -->
                       <div class="time-label">
-                        <span class="bg-red">10 Feb. 2014</span>
+                        <span class="bg-green">{{$time}}</span>
                       </div>
                       <!-- /.timeline-label -->
 
                       <!-- timeline item -->
                       <div>
-                        <i class="fas fa-envelope bg-blue"></i>
+                        <i class="fas fa-plus-circle bg-blue"></i>
                         <div class="timeline-item">
-                          <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                          <h3 class="timeline-header"><a href="#">Agregar Nota</a> </h3>
 
-                          <div class="timeline-body">
-                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                            quora plaxo ideeli hulu weebly balihoo...
-                          </div>
+                          <form role="form" id="notes" method="POST" action="{{url('/notes')}}">
+
+                            <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                            <input type="hidden" id="caseID" value="{{$case->id}}">
+                            <div class="timeline-body">
+                              <textarea class="textarea" name="note" id="description" v-model="newNote"style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
+                            </div>
+
+                          </form>
                           <div class="timeline-footer">
-                            <a class="btn btn-primary btn-sm">Read more</a>
-                            <a class="btn btn-danger btn-sm">Delete</a>
+                            <button type="button" id="save"  @click="createNote" class="btn btn-primary btn-sm">Publicar</button>
                           </div>
+
                         </div>
                       </div>
                       <!-- END timeline item -->
 
                       <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-user bg-green"></i>
-                        <div class="timeline-item">
-                          <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
-                          <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-                        </div>
-                      </div>
+                        <notes></notes>
+
                       <!-- END timeline item -->
 
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-comments bg-yellow"></i>
-                        <div class="timeline-item">
-                          <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
-                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                          <div class="timeline-body">
-                            Take me to your leader!
-                            Switzerland is small and neutral!
-                            We are more like Germany, ambitious and misunderstood!
-                          </div>
-                          <div class="timeline-footer">
-                            <a class="btn btn-warning btn-sm">View comment</a>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      
                       <div>
                         <i class="fas fa-clock bg-gray"></i>
                       </div>
                     </div>
+
                   </div>
                   <!-- /.col -->
                 </div>
@@ -233,16 +230,54 @@
 @section('scripts')
   <!-- Select2 -->
   <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
-  <script type="text/javascript">
-  $(function(){
-    //$('.select2').select2();
 
-    //Initialize Select2 Elements
+  {{-- <script type="text/javascript">
+  $(function(){
+
+    $('#save').click(function(){
+
+      var form = $('#notes');
+      var url = form.attr('action');
+			var token = $('#token').val();
+			var data = [$('#description').val(), $('#caseID').val() ];
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      $.ajax({
+            url: url,
+            headers: {'X-CSRF-TOKEN': token},
+            dataType: 'json',
+            type:'POST',
+            data:{'description':data[0], 'case': data[1]},
+            success: function(res){
+
+              console.log(res['notification']);
+            alert( res['notification']);
+
+            },
+            error: function(ex){
+              Toast.fire({
+                type: 'success',
+                title: xhr.responseText
+              })
+            }
+
+        });
+
+    });
+
+
     $('.select2').select2({
       theme: 'bootstrap4'
     })
   });
-  </script>
+  </script> --}}
+
   <!-- Summernote -->
   <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
   <script>
@@ -251,4 +286,6 @@
     $('.textarea').summernote()
   })
   </script>
+
+
 @endsection

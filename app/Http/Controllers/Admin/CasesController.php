@@ -9,6 +9,7 @@ use App\Cases;
 use App\User;
 use App\Category;
 use App\Clases\Operations;
+use Carbon\Carbon;
 
 class CasesController extends Controller
 {
@@ -87,7 +88,9 @@ class CasesController extends Controller
       $clients = User::Clients()->get();
       $specialists = User::Specialist()->get();
       $categories = Category::all();
-      return view('admin.cases.edit', compact('case', 'clients', 'specialists', 'categories'));
+      $time = Carbon::now()->toDayDateTimeString();
+
+      return view('admin.cases.edit', compact('case', 'clients', 'specialists', 'categories', 'time'));
     }
 
     public function update(Request $request, $id)
@@ -103,7 +106,7 @@ class CasesController extends Controller
         $specialist = $request->specialist;
         $client = $request->client;
 
-        $data = $request->only('title','priority', 'type', 'description');
+        $data = $request->only('title','priority', 'type', 'description', 'status');
 
         //Valido si hubo un cambio de categoria
         if(intval($request->category) != $catPrevius){
