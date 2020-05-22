@@ -1923,8 +1923,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-moment.lang('es');
+moment.locale();
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1935,9 +1982,9 @@ moment.lang('es');
   created: function created() {
     this.getNotas();
   },
-  since: function since(d) {
-    return moment(d).fromNow();
-  },
+  // since: function (d) {
+  //   return moment(d).fromNow();
+  // },
   methods: {
     getNotas: function getNotas() {
       var _this = this;
@@ -1947,10 +1994,11 @@ moment.lang('es');
         _this.notas = response.data;
       });
     },
-    createNote: function createNote() {
+    createNote: function createNote(e) {
       var _this2 = this;
 
-      var url = 'notes-create';
+      // e.preventDefault();
+      var url = 'notesCreate';
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
         description: this.newNote
       }).then(function (response) {
@@ -59039,33 +59087,130 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("i", { staticClass: "fas fa-comments bg-yellow" }),
-      _vm._v(" "),
-      _vm._l(_vm.notas, function(nota) {
-        return _c("div", { staticClass: "timeline-item" }, [
-          _c("span", { staticClass: "time" }, [
-            _c("i", { staticClass: "fas fa-clock" }),
-            _vm._v(" " + _vm._s(_vm.since(nota.created_at)))
-          ]),
+  return _c("div", { staticClass: "col-md-12" }, [
+    _c(
+      "div",
+      { staticClass: "timeline" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", [
+          _c("i", { staticClass: "fas fa-plus-circle bg-blue" }),
           _vm._v(" "),
-          _c("h3", { staticClass: "timeline-header" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v(_vm._s(nota.author_id))]),
-            _vm._v(" agrego una nota")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "timeline-body" }, [
-            _vm._v("\n      " + _vm._s(nota.description) + "\n    ")
+          _c("div", { staticClass: "timeline-item" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.createNote($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "timeline-body" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newNote,
+                        expression: "newNote"
+                      }
+                    ],
+                    staticStyle: {
+                      width: "100%",
+                      height: "200px",
+                      "font-size": "14px",
+                      "line-height": "18px",
+                      border: "1px solid #dddddd",
+                      padding: "10px"
+                    },
+                    domProps: { value: _vm.newNote },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.newNote = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ]
+            )
           ])
-        ])
-      })
-    ],
-    2
-  )
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.notas, function(nota) {
+          return _c("div", [
+            _c("i", { staticClass: "fas fa-comments bg-yellow" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "timeline-item" }, [
+              _c("h3", { staticClass: "timeline-header" }, [
+                _c("a", { attrs: { href: "#" } }, [
+                  _vm._v(_vm._s(nota.author_id))
+                ]),
+                _vm._v(" agrego una nota")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "timeline-body" }, [
+                _vm._v("\n          " + _vm._s(nota.description) + "\n        ")
+              ])
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _vm._m(3)
+      ],
+      2
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "time-label" }, [
+      _c("span", { staticClass: "bg-green" }, [_vm._v("Tiempo")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "timeline-header" }, [
+      _c("a", { attrs: { href: "#" } }, [_vm._v("Agregar Nota")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "timeline-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary btn-sm",
+          attrs: { type: "submit", id: "save" }
+        },
+        [_vm._v("Publicar")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("i", { staticClass: "fas fa-clock bg-gray" })])
+  }
+]
 render._withStripped = true
 
 
@@ -71261,16 +71406,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+
+
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

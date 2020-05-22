@@ -26,6 +26,7 @@
     "dependencies": {
         "moment": "^2.26.0",
         "toastr": "^2.1.4",
-        "vue": "^2.6.11"
+        "vue": "^2.6.11",
+        "vue-summernote": "^1.0.3"
     }
 }

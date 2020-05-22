@@ -162,54 +162,11 @@
 
               </div>
 
-              <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-
-                <div class="row" style="padding-top: 15px;">
-                  <div class="col-md-12">
-                    <!-- The time line -->
-                    <div class="timeline" id="app">
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-green">{{$time}}</span>
-                      </div>
-                      <!-- /.timeline-label -->
-
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-plus-circle bg-blue"></i>
-                        <div class="timeline-item">
-                          <h3 class="timeline-header"><a href="#">Agregar Nota</a> </h3>
-
-                          <form role="form" id="notes" method="POST" action="{{url('/notes')}}">
-
-                            <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                            <input type="hidden" id="caseID" value="{{$case->id}}">
-                            <div class="timeline-body">
-                              <textarea class="textarea" name="note" id="description" v-model="newNote"style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
-                            </div>
-
-                          </form>
-                          <div class="timeline-footer">
-                            <button type="button" id="save"  @click="createNote" class="btn btn-primary btn-sm">Publicar</button>
-                          </div>
-
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-
-                      <!-- timeline item -->
-                        <notes></notes>
-
-                      <!-- END timeline item -->
-
-                      <div>
-                        <i class="fas fa-clock bg-gray"></i>
-                      </div>
-                    </div>
-
-                  </div>
-                  <!-- /.col -->
-                </div>
+              <div  class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                <div id="app" class="row" style="padding-top: 15px;">
+                  
+                <notes></notes>
+              </div>
 
               </div>
 
@@ -283,7 +240,8 @@
   <script>
   $(function () {
     // Summernote
-    $('.textarea').summernote()
+    $('.textarea').summernote();
+
   })
   </script>
 

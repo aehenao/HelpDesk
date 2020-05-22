@@ -32,8 +32,9 @@ Route::post('/cases', 'CasesController@store');
 Route::get('/cases/{case}/edit', 'CasesController@edit');
 Route::put('/cases/{case}', 'CasesController@update');
 
+//Rutas para Notas
 Route::get('/cases/{case}/notes', 'NotesController@show');
-Route::post('/cases/{case}/notes-create', 'NotesController@store');
+Route::post('/cases/{case}/notesCreate', 'NotesController@store');
 
 Route::get('/categories', 'CategoryController@index');
 Route::get('/categories/create', 'CategoryController@create');

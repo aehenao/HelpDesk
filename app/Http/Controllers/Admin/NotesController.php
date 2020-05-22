@@ -17,20 +17,17 @@ class NotesController extends Controller
       $this->validate($request, $rules);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-
-        $data = array(
-          'description' => $request->description
-        );
-        $note = Notes::create($data);
-
-        $note->case()->associate($request->case);
-        $note->save();
+      //$case = Cases::findOrFail($id);
+       $note = Notes::create($request->all());
+       //$note->user()->associate($request->author);
+       $note->case()->associate($id);
+       $note->save();
 
         return response()->json([
-          'notification' => "Nota agregada al caso."
-        ]);
+              'notification' => 'Nota agregada.'
+          ]);
 
 
     }
