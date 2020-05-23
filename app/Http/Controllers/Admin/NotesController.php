@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Notes;
 use App\Cases;
+use App\User;
 
 class NotesController extends Controller
 {
@@ -21,8 +22,8 @@ class NotesController extends Controller
     {
       //$case = Cases::findOrFail($id);
        $note = Notes::create($request->all());
-       //$note->user()->associate($request->author);
        $note->case()->associate($id);
+       $note->author()->associate($request->author);
        $note->save();
 
         return response()->json([
@@ -34,8 +35,15 @@ class NotesController extends Controller
 
     public function show($id)
     {
-       $note = Notes::where('case_id', $id)->orderBy('created_at', 'DESC')->get();
-       return $note;
+      $notes = Notes::where('case_id', $id)->orderBy('created_at', 'DESC')->get();
+
+       return $notes;
+    }
+
+    public function getAuthor($id)
+    {
+       $author = User::where('id', $id)->get('name');
+       return $author;
     }
 
 

@@ -13,7 +13,7 @@ class Notes extends Model
       return $this->belongsTo('App\Cases');
     }
 
-    public function user()
+    public function author()
     {
       return $this->belongsTo('App\User');
     }

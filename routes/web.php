@@ -34,6 +34,7 @@ Route::put('/cases/{case}', 'CasesController@update');
 
 //Rutas para Notas
 Route::get('/cases/{case}/notes', 'NotesController@show');
+Route::get('/author/{author}', 'NotesController@getAuthor');
 Route::post('/cases/{case}/notesCreate', 'NotesController@store');
 
 Route::get('/categories', 'CategoryController@index');

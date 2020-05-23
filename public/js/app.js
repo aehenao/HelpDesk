@@ -1966,25 +1966,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
+var user = document.head.querySelector('meta[name="user"]');
 moment.locale();
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       notas: [],
-      newNote: ''
+      newNote: '',
+      author: ''
     };
+  },
+  computed: {
+    infoUser: function infoUser() {
+      return JSON.parse(user.content);
+    }
   },
   created: function created() {
     this.getNotas();
   },
-  // since: function (d) {
-  //   return moment(d).fromNow();
-  // },
   methods: {
     getNotas: function getNotas() {
       var _this = this;
@@ -2000,7 +2000,8 @@ moment.locale();
       // e.preventDefault();
       var url = 'notesCreate';
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
-        description: this.newNote
+        description: this.newNote,
+        author: this.infoUser.id
       }).then(function (response) {
         _this2.getNotas();
 
@@ -2008,6 +2009,17 @@ moment.locale();
         toastr.success('La nota ha sido registrada');
       })["catch"](function (error) {
         toastr.error('Ha ocurrido un error.');
+      });
+    },
+    since: function since(d) {
+      return moment(d).fromNow();
+    },
+    getAuthor: function getAuthor(id) {
+      var _this3 = this;
+
+      var urlNotas = '/author/' + id;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(urlNotas).then(function (response) {
+        _this3.author = response.data;
       });
     }
   }
@@ -59092,13 +59104,11 @@ var render = function() {
       "div",
       { staticClass: "timeline" },
       [
-        _vm._m(0),
-        _vm._v(" "),
         _c("div", [
           _c("i", { staticClass: "fas fa-plus-circle bg-blue" }),
           _vm._v(" "),
           _c("div", { staticClass: "timeline-item" }, [
-            _vm._m(1),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "form",
@@ -59141,7 +59151,7 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(1)
               ]
             )
           ])
@@ -59152,12 +59162,25 @@ var render = function() {
             _c("i", { staticClass: "fas fa-comments bg-yellow" }),
             _vm._v(" "),
             _c("div", { staticClass: "timeline-item" }, [
-              _c("h3", { staticClass: "timeline-header" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(_vm._s(nota.author_id))
-                ]),
-                _vm._v(" agrego una nota")
+              _c("span", { staticClass: "time" }, [
+                _c("i", { staticClass: "fas fa-clock" }),
+                _vm._v(" " + _vm._s(_vm.since(nota.created_at)))
               ]),
+              _vm._v(" "),
+              _c(
+                "h3",
+                { staticClass: "timeline-header" },
+                [
+                  _vm._v(_vm._s(_vm.getAuthor(nota.author_id))),
+                  _vm._l(_vm.author, function(user) {
+                    return _c("a", { attrs: { href: "#" } }, [
+                      _vm._v(_vm._s(user.name))
+                    ])
+                  }),
+                  _vm._v(" agrego una nota")
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "timeline-body" }, [
                 _vm._v("\n          " + _vm._s(nota.description) + "\n        ")
@@ -59166,21 +59189,13 @@ var render = function() {
           ])
         }),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(2)
       ],
       2
     )
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "time-label" }, [
-      _c("span", { staticClass: "bg-green" }, [_vm._v("Tiempo")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -71422,12 +71437,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('notes', __webpack_require__(/*! ./components/notes.vue */ "./resources/js/components/notes.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.component('notes', __webpack_require__(/*! ./components/notes.vue */ "./resources/js/components/notes.vue")["default"]); //Obtengo el usuario logueado
 
 var app = new Vue({
   el: '#app'

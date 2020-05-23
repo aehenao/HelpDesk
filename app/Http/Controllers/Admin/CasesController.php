@@ -88,9 +88,8 @@ class CasesController extends Controller
       $clients = User::Clients()->get();
       $specialists = User::Specialist()->get();
       $categories = Category::all();
-      $time = Carbon::now()->toDayDateTimeString();
 
-      return view('admin.cases.edit', compact('case', 'clients', 'specialists', 'categories', 'time'));
+      return view('admin.cases.edit', compact('case', 'clients', 'specialists', 'categories'));
     }
 
     public function update(Request $request, $id)

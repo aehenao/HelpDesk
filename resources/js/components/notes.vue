@@ -3,10 +3,6 @@
   <div class="col-md-12">
     <!-- The time line -->
     <div class="timeline" >
-      <!-- timeline time label -->
-      <div class="time-label">
-        <span class="bg-green">Tiempo</span>
-      </div>
       <!-- /.timeline-label -->
       <div>
         <i class="fas fa-plus-circle bg-blue"></i>
@@ -33,8 +29,8 @@
       <div v-for="nota in notas">
         <i class="fas fa-comments bg-yellow"></i>
         <div class="timeline-item" >
-          <!-- <span class="time"><i class="fas fa-clock"></i> {{since(nota.created_at)}}</span> -->
-          <h3 class="timeline-header"><a href="#">{{nota.author_id}}</a> agrego una nota</h3>
+          <span class="time"><i class="fas fa-clock"></i> {{since(nota.created_at)}}</span>
+          <h3 class="timeline-header">{{getAuthor(nota.author_id)}}<a href="#" v-for="user in author">{{user.name}}</a> agrego una nota</h3>
           <div class="timeline-body">
             {{nota.description}}
           </div>
@@ -61,6 +57,9 @@
 <script>
 import axios from 'axios'
 
+let user = document.head.querySelector('meta[name="user"]');
+
+
 moment.locale();
 
 export default {
@@ -68,18 +67,20 @@ export default {
     return {
       notas: [],
       newNote: '',
+      author: '',
+    }
+  },
+  computed: {
+    infoUser(){
+        return JSON.parse(user.content);
     }
   },
   created: function(){
     this.getNotas();
   },
-  // since: function (d) {
-  //   return moment(d).fromNow();
-  // },
   methods: {
     getNotas: function(){
       var urlNotas = 'notes';
-
       axios.get(urlNotas).then(response => {
         this.notas = response.data
       });
@@ -89,6 +90,7 @@ export default {
       var url = 'notesCreate';
       axios.post(url,{
         description: this.newNote,
+        author: this.infoUser.id,
       }).then(response => {
         this.getNotas();
         this.newNote = '';
@@ -96,7 +98,18 @@ export default {
       }).catch(error => {
         toastr.error('Ha ocurrido un error.');
       });
-    }
+    },
+    since: function (d) {
+      return moment(d).fromNow();
+    },
+    getAuthor: function (id){
+      var urlNotas = '/author/' + id;
+      axios.get(urlNotas).then(response => {
+        this.author =  response.data;
+      });
+
+    },
+
   }
 }
 </script>
