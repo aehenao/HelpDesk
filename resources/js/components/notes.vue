@@ -4,9 +4,9 @@
     <!-- The time line -->
     <div class="timeline" >
       <!-- /.timeline-label -->
-      <div>
+      <div v-if="infoCase != 'close'">
         <i class="fas fa-plus-circle bg-blue"></i>
-        <div class="timeline-item">
+        <div class="timeline-item" >
           <h3 class="timeline-header"><a href="#">Agregar Nota</a> </h3>
 
           <form @submit.prevent="createNote">
@@ -55,9 +55,10 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 
 let user = document.head.querySelector('meta[name="user"]');
+let dataCase = document.head.querySelector('meta[name="case"]');
 
 
 moment.locale();
@@ -73,6 +74,9 @@ export default {
   computed: {
     infoUser(){
         return JSON.parse(user.content);
+    },
+    infoCase(){
+      return dataCase.content;
     }
   },
   created: function(){
@@ -107,9 +111,7 @@ export default {
       axios.get(urlNotas).then(response => {
         this.author =  response.data;
       });
-
     },
-
   }
 }
 </script>

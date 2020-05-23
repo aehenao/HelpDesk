@@ -114,10 +114,10 @@
                      </div>
 
                         <div class="col-md-3">
-                          <button type="submit" class="btn btn-block btn-primary">Crear</button>
+                          <button type="submit" class="btn btn-block btn-success">Crear</button>
                         </div>
                         <div class="col-md-3">
-                          <a href="/cases" class="btn btn-block btn-warning">Volver</a>
+                          <a href="/cases" class="btn btn-block bg-gradient-info" style="color: white;">Volver</a>
                         </div>
 
 

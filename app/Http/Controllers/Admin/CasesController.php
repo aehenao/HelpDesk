@@ -98,14 +98,12 @@ class CasesController extends Controller
       $category = Category::findOrFail($request->category);
       $case = Cases::findOrFail($id);
       $catPrevius = $case->category->id;
-      $user = User::findOrFail($request->client);
 
-      //try {
-        $description = $request->description;
+      try {
         $specialist = $request->specialist;
         $client = $request->client;
 
-        $data = $request->only('title','priority', 'type', 'description', 'status');
+        $data = $request->only('title','priority', 'type', 'status');
 
         //Valido si hubo un cambio de categoria
         if(intval($request->category) != $catPrevius){
@@ -126,10 +124,10 @@ class CasesController extends Controller
         $notification = 'Datos guardados correctamente';
         return back()->with(compact('notification'));
 
-      // } catch (\Exception $e) {
-      //   $errors []= $e->getMessage();
-      //   return back()->with(compact('errors'));
-      // }
+      } catch (\Exception $e) {
+        $errors []= $e->getMessage();
+        return back()->with(compact('errors'));
+      }
     }
 
 

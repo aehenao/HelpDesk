@@ -1,7 +1,5 @@
 @extends('layouts.panel')
 
-@section('subtitle', 'Casos')
-
 @section('options')
   <li class="breadcrumb-item"><a href="/cases/create">Crear</a></li>
 @endsection
@@ -19,9 +17,20 @@
       <div class="col-12">
         <div class="card">
 
+          <div class="card-header">
+            <h3 class="card-title">Vista de Casos</h3>
+
+            <div class="card-tools">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="viewCasesClose" >
+                <label for="viewCasesClose" class="custom-control-label">Ver casos cerrados</label>
+              </div>
+            </div>
+
+          </div>
           <!-- /.card-header -->
-          <div class="card-body">
-            <table id="tableInfo" class="table table-bordered table-hover">
+          <div class="card-body table-responsive p-0">
+            <table id="tableInfo" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Caso #</th>
@@ -34,9 +43,9 @@
                   <th>Especialista</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="contenido">
                 @foreach($cases as $case)
-                  <tr>
+                  <tr  @if($case->status == 'close') class="activo" style="display: none;" @endif>
                     <td>{{$case->id}}</td>
                     <td><a  href="{{url('cases/'.$case->id.'/edit')}}">{{$case->title}}</a>
                     </td>
@@ -46,11 +55,11 @@
                         <span class="badge bg-warning" style="font-size: 14px; display: block; background-color:#fcff43;">
                           Registrado</span>
                       @elseif($case->status == 'stop')
-                        <span class="badge bg-error" style="font-size: 14px; display: block;">En pausa</span>
+                        <span class="badge bg-danger" style="font-size: 14px; display: block;">En pausa</span>
                       @elseif($case->status == 'process')
                         <span class="badge bg-primary" style="font-size: 14px; display: block;">En proceso</span>
                       @elseif($case->status == 'close')
-                        <span class="badge bg-error" style="font-size: 14px; display: block; color: #ffffff!important; background-color:#3c3c3c;">Cerrado</span>
+                        <span class="badge " style="font-size: 14px; display: block; color: #ffffff!important; background-color: #0a0a0a!important;">Cerrado</span>
                       @endif
                     </td>
                     <td>{{$case->solution_time}}</td>
@@ -69,28 +78,7 @@
                     <td>
                       {{$case->specialist->name}}
                     </td>
-                    {{-- <td>
-                      <form action="{{ url('/cases/' .$case->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="row">
-                          <div class="col-md-3">
-                            <a  href="{{url('clients/'.$case->id.'/edit')}}"class="btn btn-block btn-outline-warning btn-sm">
-                              <i class="fas fa-edit"></i>
-                            </a>
-                          </div>
 
-                          <div class="col-md-3">
-                            <button type="submit" class="btn btn-block btn-outline-danger btn-sm">
-                              <i class="fa fa-trash-alt"></i>
-                            </button>
-                          </div>
-
-                        </div>
-                      </form>
-
-
-                    </td> --}}
                   </tr>
                 @endforeach
 
@@ -98,7 +86,7 @@
 
             </table>
             <div class="card-body">
-              {{ $cases->links() }}
+              {{-- {{ $cases->links() }} --}}
             </div>
           </div>
           <!-- /.card-body -->
@@ -126,17 +114,36 @@
     $('#tableInfo').DataTable({
       "paging": false,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": false,
       "autoWidth": false,
       "responsive": true,
     });
 
-    $("input[data-bootstrap-switch]").each(function(){
-      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    //Habilito la vista de casos cerrados
+  $("#viewCasesClose").change(function(){
+    if($('#viewCasesClose').prop('checked')) {
+
+       $("#contenido tr").each(function(){
+
+         if ($("tr").is(":hidden")){
+           $("tr").show();
+         }
+
+       });
+
+  }else{
+    $("#contenido tr").each(function(){
+
+      if ($("tr").hasClass('activo')){
+        $('.activo').hide();
+      }
+
     });
+  }
 
   });
+});
 </script>
 @endsection

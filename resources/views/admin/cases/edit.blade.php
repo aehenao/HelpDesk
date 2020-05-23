@@ -1,5 +1,9 @@
 @extends('layouts.panel')
 
+@section('meta')
+  <meta name="case" content="{{ $case->status }}">
+@endsection
+
 @section('styles')
 <!-- Select2 -->
 <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
@@ -48,7 +52,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="title">Asunto</label>
-          <input type="text" class="form-control" id="title" name="title" value="{{old('title',$case->title)}}">
+          <input type="text" class="form-control" id="title" name="title" value="{{old('title',$case->title)}}" disabled>
         </div>
       </div>
 
@@ -68,7 +72,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Urgencia</label>
-          <select class="form-control" name="priority">
+          <select class="form-control" name="priority" @if($case->status == 'close') disabled @endif>
             <option value="low" @if($case->priority == 'low') selected @endif>Baja</option>
               <option value="normal" @if($case->priority == 'normal') selected @endif>Normal</option>
               <option value="high" @if($case->priority == 'high') selected @endif>Alta</option>
@@ -80,7 +84,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Especialista</label>
-                  <select class="form-control select2" name="specialist" style="width: 100%;" required>
+                  <select class="form-control select2" name="specialist" style="width: 100%;" required @if($case->status == 'close') disabled @endif>
                     @foreach ($specialists as $specialist)
                       <option value="{{$specialist->id}}" @if($specialist->id == $case->specialist->id) selected @endif>
                         {{$specialist->name}}</option>
@@ -100,7 +104,7 @@
                 <div class="col-md-5">
                   <div class="form-group">
                     <label>Categoria</label>
-                    <select class="form-control select2" name="category" style="width: 100%;" required>
+                    <select class="form-control select2" name="category" style="width: 100%;" required @if($case->status == 'close') disabled @endif>
                       @foreach ($categories as $category)
                         <option value="{{$category->id}}" @if($category->id == $case->category->id) selected @endif>
                           {{$category->name}}
@@ -113,10 +117,12 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label>Estado</label>
-                    <select class="form-control" name="status">
+                    <select class="form-control" name="status" @if($case->status == 'close') disabled @endif>
                       <option value="register" @if($case->status == 'register') selected @else style="display: none;" @endif>Registrado</option>
-                      <option value="process" @if($case->status == 'process') selected @endif>En Proceso</option>
-                        @if($case->status != 'register')
+                        @if($case->status != 'close')
+                          <option value="process" @if($case->status == 'process') selected @endif>En Proceso</option>
+                        @endif
+                        @if($case->status != 'register' or $case->status != 'close')
                           <option value="stop" @if($case->status == 'stop') selected @endif>En Espera</option>
                         @endif
                         @if($case->status == 'register')
@@ -131,7 +137,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Tipo</label>
-                    <select class="form-control" name="type">
+                    <select class="form-control" name="type" @if($case->status == 'close') disabled @endif>
                       <option value="request" @if($case->type == 'request') selected @endif>Requerimiento</option>
                         <option value="incidence" @if($case->type == 'incidence') selected @endif>Incidencia</option>
                         </select>
@@ -141,19 +147,20 @@
 
                     <div class="col-md-12">
                       <div class="mb-3">
-                        <textarea class="textarea" name="description" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="{{old('description')}}">
+                        <textarea class="textarea" name="description" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="{{old('description')}}" disabled>
                           {!! $case->description !!}
                         </textarea>
                       </div>
 
                     </div>
+                    @if($case->status != 'close')
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-block btn-success">Guardar</button>
+                    </div>
+                  @endif
 
                     <div class="col-md-3">
-                      <button type="submit" class="btn btn-block btn-primary">Guardar Cambios</button>
-                    </div>
-
-                    <div class="col-md-4">
-                      <a href="/cases" class="btn btn-block btn-warning" style="color: white;">Volver</a>
+                      <a href="/cases" class="btn btn-block bg-gradient-info" style="color: white;">Volver</a>
                     </div>
 
                   </form>
@@ -164,7 +171,7 @@
 
               <div  class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
                 <div id="app" class="row" style="padding-top: 15px;">
-                  
+
                 <notes></notes>
               </div>
 
@@ -188,59 +195,12 @@
   <!-- Select2 -->
   <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
 
-  {{-- <script type="text/javascript">
-  $(function(){
-
-    $('#save').click(function(){
-
-      var form = $('#notes');
-      var url = form.attr('action');
-			var token = $('#token').val();
-			var data = [$('#description').val(), $('#caseID').val() ];
-
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      $.ajax({
-            url: url,
-            headers: {'X-CSRF-TOKEN': token},
-            dataType: 'json',
-            type:'POST',
-            data:{'description':data[0], 'case': data[1]},
-            success: function(res){
-
-              console.log(res['notification']);
-            alert( res['notification']);
-
-            },
-            error: function(ex){
-              Toast.fire({
-                type: 'success',
-                title: xhr.responseText
-              })
-            }
-
-        });
-
-    });
-
-
-    $('.select2').select2({
-      theme: 'bootstrap4'
-    })
-  });
-  </script> --}}
-
   <!-- Summernote -->
   <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
   <script>
   $(function () {
     // Summernote
-    $('.textarea').summernote();
+    $('.textarea').summernote('disable');
 
   })
   </script>

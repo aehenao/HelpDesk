@@ -32,10 +32,10 @@
 
                 <div class="row">
                   <div class="col-md-4">
-                    <button type="submit" class="btn btn-block btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-block btn-success">Guardar</button>
                   </div>
                   <div class="col-md-4">
-                    <a href="/clients" class="btn btn-block btn-warning">Volver</a>
+                    <a href="/clients" class="btn btn-block bg-gradient-info" style="color: white;">Volver</a>
                   </div>
 
                 </div>

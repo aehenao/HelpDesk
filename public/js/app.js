@@ -1968,6 +1968,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 var user = document.head.querySelector('meta[name="user"]');
+var dataCase = document.head.querySelector('meta[name="case"]');
 moment.locale();
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1980,6 +1981,9 @@ moment.locale();
   computed: {
     infoUser: function infoUser() {
       return JSON.parse(user.content);
+    },
+    infoCase: function infoCase() {
+      return dataCase.content;
     }
   },
   created: function created() {
@@ -59104,58 +59108,60 @@ var render = function() {
       "div",
       { staticClass: "timeline" },
       [
-        _c("div", [
-          _c("i", { staticClass: "fas fa-plus-circle bg-blue" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "timeline-item" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.createNote($event)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "timeline-body" }, [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newNote,
-                        expression: "newNote"
-                      }
-                    ],
-                    staticStyle: {
-                      width: "100%",
-                      height: "200px",
-                      "font-size": "14px",
-                      "line-height": "18px",
-                      border: "1px solid #dddddd",
-                      padding: "10px"
-                    },
-                    domProps: { value: _vm.newNote },
+        _vm.infoCase != "close"
+          ? _c("div", [
+              _c("i", { staticClass: "fas fa-plus-circle bg-blue" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "timeline-item" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
                     on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.newNote = $event.target.value
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.createNote($event)
                       }
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(1)
-              ]
-            )
-          ])
-        ]),
+                  },
+                  [
+                    _c("div", { staticClass: "timeline-body" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newNote,
+                            expression: "newNote"
+                          }
+                        ],
+                        staticStyle: {
+                          width: "100%",
+                          height: "200px",
+                          "font-size": "14px",
+                          "line-height": "18px",
+                          border: "1px solid #dddddd",
+                          padding: "10px"
+                        },
+                        domProps: { value: _vm.newNote },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.newNote = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm._l(_vm.notas, function(nota) {
           return _c("div", [
