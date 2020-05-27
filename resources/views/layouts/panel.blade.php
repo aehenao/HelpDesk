@@ -90,6 +90,15 @@
         </div><!-- /.container-fluid -->
       </section>
 
+      @if (count($errors) > 0)
+        <div  class="alert alert-danger">
+          <ul>
+            @foreach ($errors as $error)
+              <li> <strong>Error</strong> {{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
       <!-- Main content -->
       @yield('content')
       <!-- /.content -->
@@ -187,7 +196,6 @@ $(document).ready(function() {
     });
 
 
-    const error = @json($errors->all());
 
     @if(Session::has('notification'))
       Toast.fire({
@@ -196,16 +204,6 @@ $(document).ready(function() {
       })
 
     @endif
-
-
-    if(error.length){
-      $.each(error, function (ind, elem) {
-       toastr.error(elem)
-       //console.log(elem);
-
-     });
-
-    }
 
 
 

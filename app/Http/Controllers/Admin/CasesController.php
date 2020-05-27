@@ -10,6 +10,7 @@ use App\User;
 use App\Category;
 use App\Clases\Operations;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class CasesController extends Controller
 {
@@ -34,10 +35,11 @@ class CasesController extends Controller
 
     public function create()
     {
-      $specialists = User::Specialist()->get();
-      $clients = User::Clients()->get();
-      $categories = Category::all();
-      return view('admin.cases.create', compact('specialists', 'clients', 'categories'));
+        $specialists = User::Specialist()->get();
+        $clients = User::Clients()->get();
+        $categories = Category::all();
+        return view('admin.cases.create', compact('specialists', 'clients', 'categories'));
+
     }
 
     public function store(Request $request)
@@ -52,14 +54,35 @@ class CasesController extends Controller
           $specialist = $request->specialist;
           $client = $request->client;
 
+          $dom = new \domdocument();
+          $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+          $images = $dom->getElementsByTagName('img');
+
+          foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+            if (preg_match('/data:image/', $src)) {
+              preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+              $mimeType = $groups['mime'];
+              $path = '/images/' . uniqid('', true) . '.' . $mimeType;
+
+              //$path = Storage::disk('public')->put('images', file_get_contents($src) );
+              Storage::disk('public')->put($path, file_get_contents($src));
+              $image->removeAttribute('src');
+              //$image->setAttribute('src', Storage::disk('public')->url($path));
+              $image->setAttribute('src', '/storage'. $path);
+            }
+          }
+          //Guardo el texto formateado
+           $description = $dom->savehtml();
 
           $author = $request->author;
-          $data = $request->only('title','priority', 'type', 'description');
+          $data = $request->only('title','priority', 'type') +[
+            'description' => $description
+          ];
 
           //Defino el tiempo de solucion que tomara realizar el Caso (depende de la categoria)
           $ans = intval($category->ans);
           $solutionTime = $oper->AddHours($date, $ans);
-
           $data['solution_time'] = $solutionTime;
 
           $case = Cases::create($data); // Creo el caso

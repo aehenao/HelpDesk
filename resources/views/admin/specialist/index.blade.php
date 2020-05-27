@@ -37,7 +37,13 @@
                     <td>{{$specialist->email}}</td>
                     <td>
                       <div class="col-md-3">
-                        <input type="checkbox" name="my-checkbox" @if($specialist->status == 'on') checked @endif data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                        <center>
+                          @if($specialist->status == 'on')
+                            <span class="badge bg-success" ><h6>Activo</h6></span>
+                          @else
+                            <span class="badge bg-danger" ><h6>Inactivo</h6></span>
+                          @endif
+                        </center>
                       </div>
                     </td>
                     <td>
