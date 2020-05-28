@@ -1,7 +1,8 @@
 @extends('layouts.panel')
 
 @section('options')
-  <li class="breadcrumb-item"><a href="/cases/create">Crear</a></li>
+  <li class="breadcrumb-item">
+    <a href="/cases/create"><i class="nav-icon fas fa-plus-square"></i>Crear Caso</a></li>
 @endsection
 
 @section('styles')
@@ -40,14 +41,13 @@
                   <th>Tiempo de Solucion</th>
                   <th>Tipo</th>
                   <th>Categoria</th>
-                  <th>Especialista</th>
                 </tr>
               </thead>
               <tbody id="contenido">
                 @foreach($cases as $case)
                   <tr  @if($case->status == 'close') class="activo" style="display: none;" @endif>
                     <td>{{$case->id}}</td>
-                    <td><a  href="{{url('cases/'.$case->id.'/edit')}}">{{$case->title}}</a>
+                    <td><a  href="{{url('/openCase/'.$case->id.'/edit')}}">{{$case->title}}</a>
                     </td>
                     <td>{{$case->client->name}}</td>
                     <td>
@@ -71,9 +71,6 @@
                       @endif
                     </td>
                     <td>{{$case->category->name}}</td>
-                    <td>
-                      {{$case->specialist->name}}
-                    </td>
 
                   </tr>
                 @endforeach

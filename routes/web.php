@@ -24,6 +24,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Rutas para Notas
+Route::get('/cases/{case}/notes', 'NotesController@show');
+Route::post('/cases/{case}/notesCreate', 'NotesController@store');
+Route::get('/openCase/{case}/notes', 'NotesController@show');
+Route::post('/openCase/{case}/notesCreate', 'NotesController@store');
+
 Route::middleware(['auth', 'admin'])->namespace('Admin')->group(function() {
 
 Route::get('/cases', 'CasesController@index');
@@ -33,10 +39,6 @@ Route::get('/cases/{case}/edit', 'CasesController@edit');
 Route::put('/cases/{case}', 'CasesController@update');
 
 
-//Rutas para Notas
-Route::get('/cases/{case}/notes', 'NotesController@show');
-Route::get('/author/{author}', 'NotesController@getAuthor');
-Route::post('/cases/{case}/notesCreate', 'NotesController@store');
 
 Route::get('/categories', 'CategoryController@index');
 Route::get('/categories/create', 'CategoryController@create');
@@ -46,4 +48,12 @@ Route::put('/categories/{category}', 'CategoryController@update');
 
 Route::resource('specialist', 'SpecialistController');
 Route::resource('clients', 'ClientController');
+});
+
+Route::middleware(['auth', 'aux'])->namespace('Assistant')->group(function() {
+
+Route::get('/inbox', 'AuxController@index');
+Route::get('/openCase/{id}/edit', 'AuxController@edit');
+
+
 });

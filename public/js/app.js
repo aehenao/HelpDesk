@@ -1908,8 +1908,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1966,7 +1964,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 var user = document.head.querySelector('meta[name="user"]');
 var dataCase = document.head.querySelector('meta[name="case"]');
 moment.locale();
@@ -1974,8 +1971,7 @@ moment.locale();
   data: function data() {
     return {
       notas: [],
-      newNote: '',
-      author: ''
+      newNote: ''
     };
   },
   computed: {
@@ -1990,20 +1986,21 @@ moment.locale();
     this.getNotas();
   },
   methods: {
-    getNotas: function getNotas() {
+    getNotas: function getNotas(id) {
       var _this = this;
 
+      //var urlNotas = '/views/' + id + 'notes';
       var urlNotas = 'notes';
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(urlNotas).then(function (response) {
+      axios.get(urlNotas).then(function (response) {
         _this.notas = response.data;
       });
     },
-    createNote: function createNote(e) {
+    createNote: function createNote() {
       var _this2 = this;
 
       // e.preventDefault();
       var url = 'notesCreate';
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
+      axios.post(url, {
         description: this.newNote,
         author: this.infoUser.id
       }).then(function (response) {
@@ -2017,14 +2014,6 @@ moment.locale();
     },
     since: function since(d) {
       return moment(d).fromNow();
-    },
-    getAuthor: function getAuthor(id) {
-      var _this3 = this;
-
-      var urlNotas = '/author/' + id;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(urlNotas).then(function (response) {
-        _this3.author = response.data;
-      });
     }
   }
 });
@@ -59177,10 +59166,9 @@ var render = function() {
                 "h3",
                 { staticClass: "timeline-header" },
                 [
-                  _vm._v(_vm._s(_vm.getAuthor(nota.author_id))),
-                  _vm._l(_vm.author, function(user) {
+                  _vm._l(nota.name, function(autor) {
                     return _c("a", { attrs: { href: "#" } }, [
-                      _vm._v(_vm._s(user.name))
+                      _vm._v(_vm._s(autor))
                     ])
                   }),
                   _vm._v(" agrego una nota")
@@ -71427,6 +71415,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 

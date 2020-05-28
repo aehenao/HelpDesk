@@ -30,7 +30,7 @@
         <i class="fas fa-comments bg-yellow"></i>
         <div class="timeline-item" >
           <span class="time"><i class="fas fa-clock"></i> {{since(nota.created_at)}}</span>
-          <h3 class="timeline-header">{{getAuthor(nota.author_id)}}<a href="#" v-for="user in author">{{user.name}}</a> agrego una nota</h3>
+          <h3 class="timeline-header"><a href="#" v-for="autor in nota.name">{{autor}}</a> agrego una nota</h3>
           <div class="timeline-body">
             {{nota.description}}
           </div>
@@ -68,7 +68,6 @@ export default {
     return {
       notas: [],
       newNote: '',
-      author: '',
     }
   },
   computed: {
@@ -83,13 +82,14 @@ export default {
     this.getNotas();
   },
   methods: {
-    getNotas: function(){
+    getNotas: function(id){
+      //var urlNotas = '/views/' + id + 'notes';
       var urlNotas = 'notes';
       axios.get(urlNotas).then(response => {
         this.notas = response.data
       });
     },
-    createNote: function(e){
+    createNote: function(){
       // e.preventDefault();
       var url = 'notesCreate';
       axios.post(url,{
@@ -105,12 +105,6 @@ export default {
     },
     since: function (d) {
       return moment(d).fromNow();
-    },
-    getAuthor: function (id){
-      var urlNotas = '/author/' + id;
-      axios.get(urlNotas).then(response => {
-        this.author =  response.data;
-      });
     },
   }
 }

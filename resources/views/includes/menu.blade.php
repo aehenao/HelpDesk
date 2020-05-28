@@ -1,6 +1,7 @@
 <nav  class="mt-2" >
   <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
+@if(auth()->user()->role == 'client')
   <li class="nav-header">CLIENTE</li>
     <li class="nav-item has-treeview" id="submenu">
       <a href="#" class="nav-link">
@@ -25,7 +26,7 @@
         </li>
       </ul>
     </li>
-
+@elseif(auth()->user()->role == 'admin')
     <li class="nav-header">ADMINISTRACION</li>
     <li class="nav-item has-treeview" id="submenu">
       <a href="#" class="nav-link">
@@ -66,15 +67,15 @@
         </p>
       </a>
     </li>
-
+@elseif(auth()->user()->role == 'aux')
     <li class="nav-header">ESPECIALISTA</li>
     <li class="nav-item">
-      <a href="#" class="nav-link">
-        <i class="nav-icon far fa-circle text-danger"></i>
-        <p class="text">Casos</p>
+      <a href="/inbox" class="nav-link">
+        <i class="nav-icon fas fa-inbox text-danger"></i>
+        <p class="text">Mi Bandeja</p>
       </a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
       <a href="#" class="nav-link">
         <i class="nav-icon far fa-circle text-warning"></i>
         <p>Warning</p>
@@ -85,14 +86,26 @@
         <i class="nav-icon far fa-circle text-info"></i>
         <p>Informational</p>
       </a>
-    </li>
-
+    </li> --}}
+@endif
     <li class="nav-header">MI PERFIL</li>
     <li class="nav-item">
       <a href="pages/widgets.html" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fas fa-user-edit"></i>
         <p>
           Configurar
+        </p>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('formLogout').submit();">
+        <form action="{{ route('logout') }}" method="POST" style="display: none;" id="formLogout">
+          @csrf
+        </form>
+        <i class="nav-icon fas fa-door-open"></i>
+        <p>
+          Cerrar Sesion
         </p>
       </a>
     </li>
