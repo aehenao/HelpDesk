@@ -104,7 +104,7 @@
                 <div class="col-md-5">
                   <div class="form-group">
                     <label>Categoria</label>
-                    <select class="form-control select2" name="category" style="width: 100%;" required @if($case->status == 'close') disabled @endif>
+                    <select class="form-control select2bs4" name="category" style="width: 100%;" required @if($case->status == 'close') disabled @endif>
                       @foreach ($categories as $category)
                         <option value="{{$category->id}}" @if($category->id == $case->category->id) selected @endif>
                           {{$category->name}}
@@ -201,7 +201,11 @@
   $(function () {
     // Summernote
     $('.textarea').summernote('disable');
+    $('.select2bs4').select2({
+     theme: 'bootstrap4'
+   })
 
+  })
   })
   </script>
 

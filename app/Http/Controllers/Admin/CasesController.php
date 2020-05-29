@@ -27,7 +27,7 @@ class CasesController extends Controller
 
     public function index()
     {
-      $cases = Cases::paginate(15);
+      $cases = Cases::where('status', '!=', 'close')->paginate(15);
       $users = User::all();
 
       return view('admin.cases.index', compact('cases', 'users'));

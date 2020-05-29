@@ -41,5 +41,11 @@ class Cases extends Model
      return $this->hasMany('App\Notes');
    }
 
+   //Scopes
+   public function scopeNumber($query, $number) //Busqueda por numero de caso
+   {
+      return $query->where('id', 'LIKE', $number);
+   }
+
 
 }

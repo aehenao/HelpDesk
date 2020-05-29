@@ -21,11 +21,15 @@
             <h3 class="card-title">Vista de Casos</h3>
 
             <div class="card-tools">
-              <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="viewCasesClose" >
-                <label for="viewCasesClose" class="custom-control-label">Ver casos cerrados</label>
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
               </div>
-            </div>
+          </div>
 
           </div>
           <!-- /.card-header -->
@@ -110,34 +114,13 @@
     $('#tableInfo').DataTable({
       "paging": false,
       "lengthChange": false,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": false,
       "autoWidth": false,
       "responsive": true,
     });
 
-    //Habilito la vista de casos cerrados
-  $("#viewCasesClose").change(function(){
-    if($('#viewCasesClose').prop('checked')) {
-
-       $("#contenido tr").each(function(){
-
-         if ($("tr").is(":hidden")){
-           $("tr").show();
-         }
-
-       });
-
-  }else{
-    $("#contenido tr").each(function(){
-
-      if ($("tr").hasClass('activo')){
-        $('.activo').hide();
-      }
-
-    });
-  }
 
   });
 });

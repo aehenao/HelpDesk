@@ -1,9 +1,5 @@
 @extends('layouts.panel')
 
-@section('options')
-  <li class="breadcrumb-item">
-    <a href="/cases/create"><i class="nav-icon fas fa-plus-square"></i>Crear Caso</a></li>
-@endsection
 
 @section('styles')
   <!-- DataTables -->
@@ -22,15 +18,20 @@
             <h3 class="card-title">Vista de Casos</h3>
 
             <div class="card-tools">
-              <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="viewCasesClose" >
-                <label for="viewCasesClose" class="custom-control-label">Ver casos cerrados</label>
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
               </div>
-            </div>
-
           </div>
+
+        </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
+
             <table id="tableInfo" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -45,7 +46,7 @@
               </thead>
               <tbody id="contenido">
                 @foreach($cases as $case)
-                  <tr  @if($case->status == 'close') class="activo" style="display: none;" @endif>
+                  <tr>
                     <td>{{$case->id}}</td>
                     <td><a  href="{{url('/openCase/'.$case->id.'/edit')}}">{{$case->title}}</a>
                     </td>
@@ -79,7 +80,7 @@
 
             </table>
             <div class="card-body">
-              {{-- {{ $cases->links() }} --}}
+              {{ $cases->links() }}
             </div>
           </div>
           <!-- /.card-body -->
@@ -107,34 +108,13 @@
     $('#tableInfo').DataTable({
       "paging": false,
       "lengthChange": false,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": false,
       "autoWidth": false,
       "responsive": true,
     });
 
-    //Habilito la vista de casos cerrados
-  $("#viewCasesClose").change(function(){
-    if($('#viewCasesClose').prop('checked')) {
-
-       $("#contenido tr").each(function(){
-
-         if ($("tr").is(":hidden")){
-           $("tr").show();
-         }
-
-       });
-
-  }else{
-    $("#contenido tr").each(function(){
-
-      if ($("tr").hasClass('activo')){
-        $('.activo').hide();
-      }
-
-    });
-  }
 
   });
 });

@@ -43,7 +43,7 @@
 <div class="tab-content" id="custom-content-below-tabContent">
 <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
 
-  <form role="form" method="POST" action="{{url('/cases/'.$case->id)}}">
+  <form role="form" method="POST" action="{{url('/saveCase/'.$case->id)}}">
     @csrf
     @method('PUT')
 
@@ -104,7 +104,7 @@
                 <div class="col-md-5">
                   <div class="form-group">
                     <label>Categoria</label>
-                    <select class="form-control select2" name="category" style="width: 100%;" required @if($case->status == 'close') disabled @endif>
+                    <select class="form-control select2bs4" name="category" style="width: 100%;" required @if($case->status == 'close') disabled @endif>
                       @foreach ($categories as $category)
                         <option value="{{$category->id}}" @if($category->id == $case->category->id) selected @endif>
                           {{$category->name}}
@@ -201,6 +201,9 @@
   $(function () {
     // Summernote
     $('.textarea').summernote('disable');
+    $('.select2bs4').select2({
+     theme: 'bootstrap4'
+   })
 
   })
   </script>

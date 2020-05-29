@@ -13,7 +13,9 @@ class AuxController extends Controller
     public function index()
     {
       $user = \Auth::user();
-      $cases = Cases::where('specialist_id', $user->id)->paginate(10);
+      $cases = Cases::where('specialist_id', $user->id)
+      ->where('status', '!=', 'close')
+      ->paginate(15);
 
 
       return view('assistant.index', compact('cases'));
@@ -27,5 +29,28 @@ class AuxController extends Controller
       $categories = Category::all();
 
       return view('assistant.edit', compact('case', 'clients', 'specialists', 'categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+      try {
+        //dd($request->all());
+        $case = Cases::findOrFail($id);
+        $specialist = $request->specialist;
+        $data = $request->only('priority', 'category', 'status');
+        $case->fill($data);
+        $case->specialist()->associate($specialist);
+
+        $case->save();
+
+        $notification = 'Se ha actualizo el caso';
+        return back()->with(compact('notification'));
+
+      } catch (\Exception $e) {
+        $errors []= $e->getMessage();
+        return back()->with(compact('errors'));
+      }
+
+
     }
 }

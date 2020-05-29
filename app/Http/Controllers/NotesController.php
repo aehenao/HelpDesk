@@ -24,7 +24,6 @@ class NotesController extends Controller
 
   public function store(Request $request, $id)
   {
-    //$case = Cases::findOrFail($id);
     $note = Notes::create($request->all());
     $note->case()->associate($id);
     $note->author()->associate($request->author);

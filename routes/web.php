@@ -54,6 +54,7 @@ Route::middleware(['auth', 'aux'])->namespace('Assistant')->group(function() {
 
 Route::get('/inbox', 'AuxController@index');
 Route::get('/openCase/{id}/edit', 'AuxController@edit');
+Route::put('/saveCase/{id}', 'AuxController@update');
 
 
 });

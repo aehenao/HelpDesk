@@ -93,7 +93,7 @@
       <a href="pages/widgets.html" class="nav-link">
         <i class="nav-icon fas fa-user-edit"></i>
         <p>
-          Configurar
+          Editar
         </p>
       </a>
     </li>
