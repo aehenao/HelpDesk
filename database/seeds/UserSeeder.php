@@ -21,18 +21,32 @@ class UserSeeder extends Seeder
      ]);
 
      User::create([
-      'name' => 'Ñejo Calvo',
-      'email' => 'elnejo@hotmail.com',
+      'name' => 'Diego Calvo',
+      'email' => 'dfcalvo@uao.edu.co',
       'password' => bcrypt('12345678'),
       'role' => 'aux'
     ]);
 
     User::create([
+     'name' => 'Jaime Sarria',
+     'email' => 'jasarria@uao.edu.co',
+     'password' => bcrypt('12345678'),
+     'role' => 'aux'
+   ]);
+
+    User::create([
      'name' => 'Cliente 1',
-     'email' => 'cliente1@hotmail.com',
+     'email' => 'cliente1@uao.edu.co',
      'password' => bcrypt('12345678'),
      'role' => 'client'
    ]);
+
+   User::create([
+    'name' => 'Andres Piedra',
+    'email' => 'ajpiedrahita@uao.edu.co',
+    'password' => bcrypt('12345678'),
+    'role' => 'client'
+  ]);
 
     }
 }

@@ -33,6 +33,7 @@ Route::post('/openCase/{case}/notesCreate', 'NotesController@store');
 //Consulta de Casos Vuejs
 Route::get('/cases/search/{search}', 'Admin\CasesController@getSearch');
 
+Route::get('/profile', 'ProfileController@edit');
 
 Route::middleware(['auth', 'admin'])->namespace('Admin')->group(function() {
 
@@ -62,6 +63,5 @@ Route::get('/inbox/cases/{specialist}', 'AuxController@getCases'); //ruta para o
 
 Route::get('/openCase/{id}/edit', 'AuxController@edit');
 Route::put('/saveCase/{id}', 'AuxController@update');
-
 
 });

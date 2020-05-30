@@ -90,7 +90,7 @@
 @endif
     <li class="nav-header">MI PERFIL</li>
     <li class="nav-item">
-      <a href="pages/widgets.html" class="nav-link">
+      <a href="/profile" class="nav-link">
         <i class="nav-icon fas fa-user-edit"></i>
         <p>
           Editar

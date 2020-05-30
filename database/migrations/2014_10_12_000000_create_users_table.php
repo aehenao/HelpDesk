@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
+            $table->string('image')->nullable();
             $table->integer('teamviewerID')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
