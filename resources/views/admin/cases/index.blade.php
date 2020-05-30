@@ -15,7 +15,7 @@
   <section class="content">
     <div class="row">
       <div class="col-12" id="app">
-        <cases></cases>
+        <admincases></admincases>
       </div>
       <!-- /.col -->
     </div>

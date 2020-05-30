@@ -29,14 +29,15 @@
             <th>Tiempo de Solucion</th>
             <th>Tipo</th>
             <th>Categoria</th>
+            <th>Especialista</th>
           </tr>
         </thead>
         <tbody id="contenido">
           <tr v-for="caso in cases.data">
             <td>{{ caso.id }}</td>
-            <td><a :href="'/openCase/' + caso.id + '/edit'" >{{ caso.title }}</a>
+            <td><a :href="'/cases/' + caso.id + '/edit'" >{{ caso.title }}</a>
             </td>
-            <td>{{ caso.nameUser }}</td>
+            <td>{{ caso.client }}</td>
             <td>
 
               <span class="badge bg-warning" v-if="caso.status == 'register'" style="font-size: 14px; display: block; background-color:#fcff43;">
@@ -56,16 +57,14 @@
               <b style="color: #fb6228" v-else>Incidente</b>
             </td>
             <td>{{ caso.nameCategory }}</td>
-
+            <td>{{ caso.specialist }}</td>
           </tr>
 
         </tbody>
 
       </table>
       <div class="card-body">
-
         <pagination :data="cases" @pagination-change-page="getCases"></pagination>
-        <!-- {{ $cases->links() }} -->
       </div>
     </div>
     <!-- /.card-body -->
@@ -87,7 +86,8 @@ export default {
   computed:{
     infoUser(){
       return JSON.parse(user.content);
-    }
+    },
+
   },
 
   created: function () {
@@ -96,7 +96,7 @@ export default {
 
   methods: {
     getCases: function(page = 1) {
-      var url = '/inbox/cases/' + this.infoUser.id + '?page=' + page;
+      var url = '/cases/all?page=' + page;
 
       axios.get(url).then(response => {
         this.cases = response.data
@@ -115,7 +115,7 @@ export default {
 
     },
 
-    
+
   }
 
 }

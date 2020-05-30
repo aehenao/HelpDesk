@@ -23,6 +23,7 @@ window.Vue = require('vue');
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('notes', require('./components/notes.vue').default);
 Vue.component('auxcases', require('./components/auxcases.vue').default);
+Vue.component('admincases', require('./components/admincases.vue').default);
 
 
 

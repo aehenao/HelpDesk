@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Storage;
 class CasesController extends Controller
 {
 
+  public function __construct()
+   {
+       $this->middleware('auth');
+   }
+
   private function performValidation($request){
     $rules = [
       'title' => 'required|min:5',
@@ -152,15 +157,31 @@ class CasesController extends Controller
 
     public function getCases(){
       $cases = \DB::table('cases')
-      ->join('users', 'cases.client_id', '=', 'users.id')
+      ->Join('users AS usr1','cases.client_id', '=', 'usr1.id')
+      ->join('users AS usr2', 'cases.specialist_id', '=', 'usr2.id')
       ->join('categories', 'cases.category_id', '=', 'categories.id')
       ->where('cases.status', '!=', 'close')
-      ->select('cases.id', 'cases.title', 'cases.status', 'cases.type', 'cases.priority', 'cases.solution_time', 'categories.name as nameCategory', 'users.name as nameUser')
+      ->select('cases.id', 'cases.title', 'cases.status', 'cases.type', 'cases.priority', 'cases.solution_time', 'categories.name as nameCategory', 'usr1.name AS client', 'usr2.name AS specialist', 'cases.created_at')
       ->orderBy('cases.created_at', 'DESC')
-      ->get();
+      ->paginate(15);
 
       return $cases;
     }
 
+    public function getSearch($value)
+    {
+      $cases = \DB::table('cases')
+      ->Join('users AS usr1','cases.client_id', '=', 'usr1.id')
+      ->join('users AS usr2', 'cases.specialist_id', '=', 'usr2.id')
+      ->join('categories', 'cases.category_id', '=', 'categories.id')
+      ->select('cases.id', 'cases.title', 'cases.status', 'cases.type', 'cases.priority', 'cases.solution_time', 'categories.name as nameCategory', 'usr1.name AS client', 'usr2.name AS specialist', 'cases.created_at')
+      ->where('cases.id', 'LIKE', $value)
+      ->orWhere('usr1.name', 'LIKE', "%$value%")
+      ->orWhere('usr2.name', 'LIKE', "%$value%")
+      ->orderBy('cases.created_at', 'DESC')
+      ->paginate(15);
+
+      return $cases;
+    }
 
 }

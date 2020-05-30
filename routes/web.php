@@ -31,6 +31,7 @@ Route::get('/openCase/{case}/notes', 'NotesController@show');
 Route::post('/openCase/{case}/notesCreate', 'NotesController@store');
 
 //Consulta de Casos Vuejs
+Route::get('/cases/search/{search}', 'Admin\CasesController@getSearch');
 
 
 Route::middleware(['auth', 'admin'])->namespace('Admin')->group(function() {
@@ -43,8 +44,6 @@ Route::get('/cases/create', 'CasesController@create');
 Route::post('/cases', 'CasesController@store');
 Route::get('/cases/{case}/edit', 'CasesController@edit');
 Route::put('/cases/{case}', 'CasesController@update');
-
-
 
 Route::get('/categories', 'CategoryController@index');
 Route::get('/categories/create', 'CategoryController@create');
