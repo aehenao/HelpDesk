@@ -27,10 +27,7 @@ class CasesController extends Controller
 
     public function index()
     {
-      $cases = Cases::where('status', '!=', 'close')->paginate(15);
-      $users = User::all();
-
-      return view('admin.cases.index', compact('cases', 'users'));
+      return view('admin.cases.index');
     }
 
     public function create()
@@ -151,6 +148,18 @@ class CasesController extends Controller
         $errors []= $e->getMessage();
         return back()->with(compact('errors'));
       }
+    }
+
+    public function getCases(){
+      $cases = \DB::table('cases')
+      ->join('users', 'cases.client_id', '=', 'users.id')
+      ->join('categories', 'cases.category_id', '=', 'categories.id')
+      ->where('cases.status', '!=', 'close')
+      ->select('cases.id', 'cases.title', 'cases.status', 'cases.type', 'cases.priority', 'cases.solution_time', 'categories.name as nameCategory', 'users.name as nameUser')
+      ->orderBy('cases.created_at', 'DESC')
+      ->get();
+
+      return $cases;
     }
 
 

@@ -11,80 +11,8 @@
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="col-12">
-        <div class="card">
-
-          <div class="card-header">
-            <h3 class="card-title">Vista de Casos</h3>
-
-            <div class="card-tools">
-              <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-          </div>
-
-        </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-
-            <table id="tableInfo" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Caso #</th>
-                  <th>Asunto</th>
-                  <th>Cliente</th>
-                  <th>Estado</th>
-                  <th>Tiempo de Solucion</th>
-                  <th>Tipo</th>
-                  <th>Categoria</th>
-                </tr>
-              </thead>
-              <tbody id="contenido">
-                @foreach($cases as $case)
-                  <tr>
-                    <td>{{$case->id}}</td>
-                    <td><a  href="{{url('/openCase/'.$case->id.'/edit')}}">{{$case->title}}</a>
-                    </td>
-                    <td>{{$case->client->name}}</td>
-                    <td>
-                      @if($case->status == 'register')
-                        <span class="badge bg-warning" style="font-size: 14px; display: block; background-color:#fcff43;">
-                          Registrado</span>
-                      @elseif($case->status == 'stop')
-                        <span class="badge bg-danger" style="font-size: 14px; display: block;">En pausa</span>
-                      @elseif($case->status == 'process')
-                        <span class="badge bg-primary" style="font-size: 14px; display: block;">En proceso</span>
-                      @elseif($case->status == 'close')
-                        <span class="badge " style="font-size: 14px; display: block; color: #ffffff!important; background-color: #0a0a0a!important;">Cerrado</span>
-                      @endif
-                    </td>
-                    <td>{{$case->solution_time}}</td>
-                    <td>
-                      @if($case->type == 'request')
-                        <b style="color: #07c116">Requerimiento</b>
-                      @else
-                        <b style="color: #fb6228">Incidente</b>
-                      @endif
-                    </td>
-                    <td>{{$case->category->name}}</td>
-
-                  </tr>
-                @endforeach
-
-              </tbody>
-
-            </table>
-            <div class="card-body">
-              {{ $cases->links() }}
-            </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
+      <div class="col-12" id="app">
+        <auxcases></auxcases>
         <!-- /.card -->
       </div>
       <!-- /.col -->

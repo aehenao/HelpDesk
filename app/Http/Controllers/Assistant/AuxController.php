@@ -18,7 +18,7 @@ class AuxController extends Controller
       ->paginate(15);
 
 
-      return view('assistant.index', compact('cases'));
+      return view('assistant.index');
     }
 
     public function edit($id)
@@ -53,4 +53,18 @@ class AuxController extends Controller
 
 
     }
+
+    public function getCases($specialist){
+      $cases = \DB::table('cases')
+      ->join('users', 'cases.client_id', '=', 'users.id')
+      ->join('categories', 'cases.category_id', '=', 'categories.id')
+      ->where('specialist_id', $specialist)
+      ->where('cases.status', '!=', 'close')
+      ->select('cases.id', 'cases.title', 'cases.status', 'cases.type', 'cases.priority', 'cases.solution_time', 'categories.name as nameCategory', 'users.name as nameUser')
+      ->orderBy('cases.created_at', 'DESC')
+      ->paginate(15);
+
+      return $cases;
+    }
+
 }

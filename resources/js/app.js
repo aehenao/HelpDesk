@@ -2,6 +2,7 @@ import toastr from 'toastr'
 import moment from 'moment'
 import axios from 'axios'
 
+
 require('./bootstrap');
 
 
@@ -19,10 +20,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-
+Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('notes', require('./components/notes.vue').default);
-
-//Obtengo el usuario logueado
+Vue.component('auxcases', require('./components/auxcases.vue').default);
 
 
 
