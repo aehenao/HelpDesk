@@ -17,7 +17,7 @@ class CreateCasesTable extends Migration
             $table->id();
 
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->string('status')->default('register'); //register, stop, process, close
             $table->string('priority')->default('normal'); //low, normal, high, critical
             $table->string('type'); //request to incidence

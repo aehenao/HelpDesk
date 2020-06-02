@@ -51,7 +51,7 @@ class CasesController extends Controller
         $oper = new Operations();
         $category = Category::findOrFail($request->category);
         $user = User::findOrFail($request->client);
-        try {
+       try {
           $description = $request->description;
           $specialist = $request->specialist;
           $client = $request->client;
@@ -59,6 +59,8 @@ class CasesController extends Controller
           $dom = new \domdocument();
           $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
           $images = $dom->getElementsByTagName('img');
+          //dd($request->all());
+          if(isset($images)){
 
           foreach ($images as $count => $image) {
             $src = $image->getAttribute('src');
@@ -74,8 +76,11 @@ class CasesController extends Controller
               $image->setAttribute('src', '/storage'. $path);
             }
           }
-          //Guardo el texto formateado
-           $description = $dom->savehtml();
+
+        }
+        //Guardo el texto formateado
+         $description = $dom->savehtml();
+
 
           $author = $request->author;
           $data = $request->only('title','priority', 'type') +[
