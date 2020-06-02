@@ -17,7 +17,7 @@ Route::get('/', function () {
   // $conn = new Conexion();
   // $response = $conn->data();
 
-  return view('welcome');
+  return redirect('/login');
 });
 
 Auth::routes();

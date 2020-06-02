@@ -30,11 +30,17 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Toastr -->
- <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
- <!-- SweetAlert2 -->
-<link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
   @yield('styles')
   <link href="{{asset('css/app.css')}}" rel="stylesheet">
+  <style>
+  .user-panel img {
+    height: 90%;
+    width: 2.6rem;
+  }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -58,158 +64,158 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="@if(auth()->user()->image != null) {{asset('/storage/' . auth()->user()->image)}} @else {{asset('dist/img/user2-160x160.jpg')}} @endif" class="img-circle elevation-2" alt="User Image">
+            <img src="@if(auth()->user()->image != null) {{asset('/storage/' . auth()->user()->image)}} @else {{asset('dist/img/user2-160x160.jpg')}} @endif" class="img-circle elevation-2" >
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">{{auth()->user()->name}}</a>
+            </div>
           </div>
-          <div class="info">
-            <a href="#" class="d-block">{{auth()->user()->name}}</a>
-          </div>
-        </div>
 
-        <!-- Sidebar Menu -->
-        @include('includes.menu')
-        <!-- /.sidebar-menu -->
+          <!-- Sidebar Menu -->
+          @include('includes.menu')
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>@yield('subtitle')</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  @yield('options')
+                </ol>
+              </div>
+            </div>
+          </div><!-- /.container-fluid -->
+        </section>
+
+        @if (count($errors) > 0)
+          <div  class="alert alert-danger">
+            <ul>
+              @foreach ($errors as $error)
+                <li> <strong>Error</strong> {{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+        <!-- Main content -->
+        @yield('content')
+        <!-- /.content -->
+
       </div>
-      <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>@yield('subtitle')</h1>
-            </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                @yield('options')
-              </ol>
-            </div>
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
-
-      @if (count($errors) > 0)
-        <div  class="alert alert-danger">
-          <ul>
-            @foreach ($errors as $error)
-              <li> <strong>Error</strong> {{ $error }}</li>
-            @endforeach
-          </ul>
+      <!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 3.0.3
         </div>
-      @endif
-      <!-- Main content -->
-      @yield('content')
-      <!-- /.content -->
+      </footer>
 
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
     </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.0.3
-      </div>
-    </footer>
+    <!-- ./wrapper -->
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-  </div>
-  <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- ChartJS -->
+  <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
+  <!-- Sparkline -->
+  <script src="{{asset('plugins/sparklines/sparkline.js')}}"></script>
+  <!-- JQVMap -->
+  {{-- <script src="{{asset('plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+  <script src="{{asset('plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script> --}}
+  <!-- jQuery Knob Chart -->
+  <script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+  <!-- daterangepicker -->
+  <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+  <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+  <!-- Summernote -->
+  <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 
-  <!-- jQuery -->
-  <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
-  <!-- jQuery UI 1.11.4 -->
-  <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
-<!-- Sparkline -->
-<script src="{{asset('plugins/sparklines/sparkline.js')}}"></script>
-<!-- JQVMap -->
-{{-- <script src="{{asset('plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{asset('plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script> --}}
-<!-- jQuery Knob Chart -->
-<script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-<!-- daterangepicker -->
-<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
-<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<!-- Summernote -->
-<script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
-<!-- overlayScrollbars -->
-<script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{asset('dist/js/adminlte.js')}}"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
+  <!-- Toastr -->
+  <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+  <!-- SweetAlert2 -->
+  <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
-<!-- AdminLTE App -->
-<script src="{{asset('dist/js/adminlte.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
-<!-- Toastr -->
-<script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
-<!-- SweetAlert2 -->
-<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-
-{{-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> --}}
+  {{-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> --}}
   <script src="{{asset('js/app.js')}}"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
+  <script type="text/javascript">
+  $(document).ready(function() {
 
-  var _urlpath = $(location).attr('pathname');
+    var _urlpath = $(location).attr('pathname');
 
-  $('#menu').find('li').each(function(){
-    var _this = $(this);
-    var _str = _this.find('a').attr('href');
+    $('#menu').find('li').each(function(){
+      var _this = $(this);
+      var _str = _this.find('a').attr('href');
 
-    //_this.addClass('menu-open');
-    _str !== _urlpath ? _this.find('a').removeClass('active') : _this.find('a').addClass('active');
-    _str !== _urlpath ? _this.find('li').removeClass('menu-open') : _this.find('li').addClass('PUTO');
-
-
+      //_this.addClass('menu-open');
+      _str !== _urlpath ? _this.find('a').removeClass('active') : _this.find('a').addClass('active');
+      _str !== _urlpath ? _this.find('li').removeClass('menu-open') : _this.find('li').addClass('PUTO');
 
 
+
+
+    });
   });
-});
 
 </script>
 
 
 <script>
 
-  $(function (){
+$(function (){
 
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-
-
-
-    @if(Session::has('notification'))
-      Toast.fire({
-        type: 'success',
-        title: '{{ session('notification') }}'
-      })
-
-    @endif
-
-
-
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
   });
-  </script>
-  @yield('scripts')
+
+
+
+  @if(Session::has('notification'))
+  Toast.fire({
+    type: 'success',
+    title: '{{ session('notification') }}'
+  })
+
+  @endif
+
+
+
+});
+</script>
+@yield('scripts')
 
 </body>
 </html>

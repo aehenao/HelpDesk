@@ -1,85 +1,79 @@
 @extends('layouts.app')
 
-@section('content')
-  <div class="login-box">
-    <div class="login-logo">
-      <a href="#"><b>Ingresar</b></a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-        <p class="login-box-msg">Iniciar Sesíon</p>
+@section('style')
+  <style>
+   .description{
+     font-family: Poppins-Bold;
+     font-size: 14px;
+     color: #efefef;
+     text-align: center;
+     padding-top: 15px;
+   }
+  </style>
+@endsection
 
-        <form method="POST" action="{{ route('login') }}">
+@section('content')
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+        <div class="login100-form-title" style="background-image: url({{asset('images/helpdesk_logo.jpg')}}); background-size: 100% 120%;">
+          <span class="login100-form-title-1">
+            ¡Hola!
+          </span>
+          <small class="description">Si eres cliente, ingresa y reporta tu inconveniente y en cuestión de minutos un técnico se pondrá en contacto contigo, <b style="color: #61f361;">mantente conectado.</b></small>
+        </div>
+
+        <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
           @csrf
 
-          <div class="input-group mb-3">
-            <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus name="email">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
+          <div class="wrap-input100 validate-input m-b-26">
+            <span class="label-input100">Correo</span>
+            <input class="input100 @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus name="email" type="email" >
+            <span class="focus-input100"></span>
 
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required >
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
+
+          <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+            <span class="label-input100">Contraseña</span>
+            <input class="input100 @error('password') is-invalid @enderror" placeholder="Password" name="password" required type="password">
+            <span class="focus-input100"></span>
 
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+
           </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" name="remember" id="remember"
-                {{ old('remember') ? 'checked' : '' }}>
-                <label for="remember">
-                  Recordar
-                </label>
-              </div>
+
+          <div class="flex-sb-m w-full p-b-30 row">
+{{--
+            <div class="col-sm">
+              <a href="{{ route('register') }}" class="txt1">
+                Registrarme
+              </a>
             </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
-            </div>
-            <!-- /.col -->
+
+            <div class="col-sm">
+              <a href="{{ route('password.request') }}" class="txt1">
+                ¿Olvido su contraseña?
+              </a>
+            </div> --}}
+
+          </div>
+
+          <div class="container-login100-form-btn">
+            <button type="submit" class="login100-form-btn">
+              Ingresar
+            </button>
           </div>
         </form>
-
-        <div class="social-auth-links text-center mb-3">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-primary">
-            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-          </a>
-          <a href="#" class="btn btn-block btn-danger">
-            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-          </a>
-        </div>
-        <!-- /.social-auth-links -->
-
-        <p class="mb-1">
-          <a href="{{ route('password.request') }}">Olvido su contraseña</a>
-        </p>
-        <p class="mb-0">
-          <a href="{{ route('register') }}" class="text-center">Registrarse</a>
-        </p>
       </div>
-      <!-- /.login-card-body -->
     </div>
   </div>
-  <!-- /.login-box -->
 @endsection
