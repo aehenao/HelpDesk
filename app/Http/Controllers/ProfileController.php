@@ -33,6 +33,7 @@ class ProfileController extends Controller
   public function update(Request $request)
   {
     $this->performValidation($request);
+    
       try {
         $user = User::findOrFail(\Auth::user()->id);
         $password = $request->password;
@@ -48,7 +49,7 @@ class ProfileController extends Controller
 
         if($password)
           $data ['password'] = bcrypt($password);
-          
+
         $user->fill($data);
         $user->save();
 
@@ -59,12 +60,6 @@ class ProfileController extends Controller
         $errors []= $e->getMessage();
         return back()->with(compact('errors'));
       }
-
-
-
-
-
-
 
   }
 }

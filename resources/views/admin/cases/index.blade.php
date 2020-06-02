@@ -1,7 +1,7 @@
 @extends('layouts.panel')
 
 @section('options')
-  <li class="breadcrumb-item"><a href="/cases/create">Crear</a></li>
+  <li class="breadcrumb-item"><a href="/cases/create" class="btn btn-block btn-primary btn-lg">Crear</a></li>
 @endsection
 
 @section('styles')
