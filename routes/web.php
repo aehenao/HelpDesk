@@ -34,6 +34,7 @@ Route::post('/openCase/{case}/notesCreate', 'NotesController@store');
 Route::get('/cases/search/{search}', 'Admin\CasesController@getSearch');
 
 Route::get('/profile', 'ProfileController@edit');
+Route::put('/profile', 'ProfileController@update');
 
 Route::middleware(['auth', 'admin'])->namespace('Admin')->group(function() {
 

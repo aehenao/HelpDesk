@@ -36,7 +36,7 @@
             <td>{{ caso.id }}</td>
             <td><a :href="'/openCase/' + caso.id + '/edit'" >{{ caso.title }}</a>
             </td>
-            <td>{{ caso.nameUser }}</td>
+            <td>{{ caso.client }}</td>
             <td>
 
               <span class="badge bg-warning" v-if="caso.status == 'register'" style="font-size: 14px; display: block; background-color:#fcff43;">
@@ -115,7 +115,7 @@ export default {
 
     },
 
-    
+
   }
 
 }

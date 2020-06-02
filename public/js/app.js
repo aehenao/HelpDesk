@@ -60236,7 +60236,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(caso.nameUser))]),
+                _c("td", [_vm._v(_vm._s(caso.client))]),
                 _vm._v(" "),
                 _c("td", [
                   caso.status == "register"

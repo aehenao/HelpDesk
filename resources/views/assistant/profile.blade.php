@@ -9,7 +9,7 @@
       <div class="card-body box-profile">
         <div class="text-center">
           <img class="profile-user-img img-fluid img-circle"
-          src="../../dist/img/user4-128x128.jpg"
+          src="@if($user->image != null){{asset('/storage/' . $user->image)}} @else {{asset('dist/img/user2-160x160.jpg')}} @endif"
           alt="User profile picture">
         </div>
 
@@ -28,7 +28,9 @@
 
       <div class="tab-pane" id="settings" style="padding: 15px;">
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" role="form" method="POST" action="{{url('profile')}}" enctype="multipart/form-data">
+          @csrf
+          @method('PUT')
 
           <div class="form-group row">
             <label for="inputName" class="col-sm-2 col-form-label">Nombre</label>
