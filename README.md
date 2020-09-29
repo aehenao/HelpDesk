@@ -1,7 +1,5 @@
 <h1> HelpDesk App Web</h1>
 
-## Acerca de la App Web
-
 El desarrollo de esta Aplicacion Web es algo que quice hacer en mi tiempo libre, aunque aun me falta mucho que implementar, la app cuenta con funcionalidades como lo son:
 - Inicio de Sesíon
 - Creacion de caso
