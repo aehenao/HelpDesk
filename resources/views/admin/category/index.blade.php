@@ -3,7 +3,7 @@
 @section('subtitle', 'Categorias')
 
 @section('options')
-  <li class="breadcrumb-item"><a href="/categories/create">Crear</a></li>
+  <li class="breadcrumb-item"><a href="/categories/create" class="btn btn-block btn-primary btn-lg">Crear</a></li>
 @endsection
 
 @section('styles')

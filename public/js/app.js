@@ -2262,7 +2262,7 @@ moment.locale();
         _this2.newNote = '';
         toastr.success('La nota ha sido registrada');
       })["catch"](function (error) {
-        toastr.error('Ha ocurrido un error.');
+        toastr.error(error);
       });
     },
     since: function since(d) {

@@ -3,7 +3,7 @@
 @section('subtitle', 'Especialistas')
 
 @section('options')
-  <li class="breadcrumb-item"><a href="/specialist/create">Crear</a></li>
+  <li class="breadcrumb-item"><a href="/specialist/create" class="btn btn-block btn-primary btn-lg">Crear</a></li>
 @endsection
 
 @section('styles')

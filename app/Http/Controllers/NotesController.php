@@ -24,14 +24,22 @@ class NotesController extends Controller
 
   public function store(Request $request, $id)
   {
-    $note = Notes::create($request->all());
-    $note->case()->associate($id);
-    $note->author()->associate($request->author);
-    $note->save();
+    try {
+      $note = Notes::create($request->all());
+      $note->case()->associate($id);
+      $note->author()->associate($request->author);
+      $note->save();
 
-    return response()->json([
-      'notification' => 'Nota agregada.'
-    ]);
+      return response()->json([
+        'notification' => 'Nota agregada.'
+      ]);
+    } catch (\Exception $e) {
+      return response()->json([
+        'errors' => $e.getMessage()
+      ]);
+    }
+
+
 
 
   }

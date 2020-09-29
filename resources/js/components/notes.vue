@@ -100,7 +100,7 @@ export default {
         this.newNote = '';
         toastr.success('La nota ha sido registrada');
       }).catch(error => {
-        toastr.error('Ha ocurrido un error.');
+        toastr.error(error);
       });
     },
     since: function (d) {

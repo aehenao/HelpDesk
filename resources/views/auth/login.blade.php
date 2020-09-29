@@ -52,7 +52,7 @@
           </div>
 
           <div class="flex-sb-m w-full p-b-30 row">
-{{--
+
             <div class="col-sm">
               <a href="{{ route('register') }}" class="txt1">
                 Registrarme
@@ -63,7 +63,7 @@
               <a href="{{ route('password.request') }}" class="txt1">
                 ¿Olvido su contraseña?
               </a>
-            </div> --}}
+            </div>
 
           </div>
 
